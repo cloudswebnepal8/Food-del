@@ -1,1 +1,1 @@
-https://github.com/cloudswebnepal8/Food-del
+https://food-deli-8kqo.vercel.app/
