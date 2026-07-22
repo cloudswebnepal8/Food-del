@@ -1,12 +1,13 @@
-import { Search, ShoppingBasket } from "lucide-react";
+import { useState } from "react";
+import { Search, ShoppingBasket, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ({ setShowLogin }) => {
+const Navbar = ({ setShowLogin, onSearch }) => {
   const navigate = useNavigate();
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <nav className="flex justify-between items-center py-6">
-
       {/* Logo */}
       <h1 className="text-5xl font-bold text-orange-500">
         Tomato.
@@ -14,7 +15,6 @@ const Navbar = ({ setShowLogin }) => {
 
       {/* Links */}
       <ul className="hidden md:flex gap-10 text-gray-600 font-medium">
-
         <li>
           <a href="#home" className="border-b-2 border-orange-500 pb-1">
             Home
@@ -38,15 +38,39 @@ const Navbar = ({ setShowLogin }) => {
             Contact Us
           </a>
         </li>
-
       </ul>
 
       {/* Right Side */}
-      <div className="flex items-center gap-7">
+      <div className="flex items-center gap-5">
+        {showSearch ? (
+          <div className="flex items-center border border-gray-300 rounded-full px-3 py-2">
+            <Search size={18} className="text-gray-500" />
 
-        <Search size={22} className="cursor-pointer" />
+            <input
+              type="text"
+              placeholder="Search food..."
+              className="outline-none px-2 w-44"
+              onChange={(e) => onSearch(e.target.value)}
+              autoFocus
+            />
 
-        {/* CART ICON (FIX HERE) */}
+            <X
+              size={18}
+              className="cursor-pointer text-gray-500"
+              onClick={() => {
+                setShowSearch(false);
+                onSearch("");
+              }}
+            />
+          </div>
+        ) : (
+          <Search
+            size={22}
+            className="cursor-pointer"
+            onClick={() => setShowSearch(true)}
+          />
+        )}
+
         <ShoppingBasket
           size={22}
           className="cursor-pointer"
@@ -59,9 +83,7 @@ const Navbar = ({ setShowLogin }) => {
         >
           Sign In
         </button>
-
       </div>
-
     </nav>
   );
 };

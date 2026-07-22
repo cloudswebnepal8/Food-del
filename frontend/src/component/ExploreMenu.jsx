@@ -33,7 +33,11 @@ const foods = [
   },
 ];
 
-const ExploreMenu = () => {
+const ExploreMenu = ({ search }) => {
+  const filteredFoods = foods.filter((food) =>
+    food.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <section className="mt-14">
       <h2 className="text-4xl font-bold">
@@ -47,22 +51,28 @@ const ExploreMenu = () => {
       </p>
 
       <div className="flex justify-between mt-12 overflow-x-auto gap-8">
-        {foods.map((food) => (
-          <div
-            key={food.name}
-            className="flex flex-col items-center cursor-pointer min-w-fit"
-          >
-            <img
-              src={food.image}
-              alt={food.name}
-              className="w-24 h-24 rounded-full object-cover"
-            />
+        {filteredFoods.length > 0 ? (
+          filteredFoods.map((food) => (
+            <div
+              key={food.name}
+              className="flex flex-col items-center cursor-pointer min-w-fit"
+            >
+              <img
+                src={food.image}
+                alt={food.name}
+                className="w-24 h-24 rounded-full object-cover"
+              />
 
-            <p className="mt-4 text-gray-700">
-              {food.name}
-            </p>
-          </div>
-        ))}
+              <p className="mt-4 text-gray-700">
+                {food.name}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500 text-lg">
+            No food found.
+          </p>
+        )}
       </div>
 
       <hr className="my-12" />
